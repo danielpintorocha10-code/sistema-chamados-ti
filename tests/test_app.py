@@ -58,3 +58,49 @@ def test_rejeitar_chamado_sem_titulo(cliente):
 
     assert resposta.status_code == 400
     assert b"120 caracteres" in resposta.data
+
+
+def test_editar_chamado_atualiza_status_e_prioridade(cliente):
+    cliente.post(
+        "/chamados/novo",
+        data={
+            "titulo": "Internet lenta",
+            "descricao": "Conexão instável no setor.",
+            "prioridade": "2",
+        },
+    )
+
+    with cliente.application.app_context():
+        with sistema.conectar() as con:
+            numero = con.execute(
+                "SELECT id FROM chamados WHERE titulo = ?",
+                ("Internet lenta",),
+            ).fetchone()["id"]
+
+    resposta = cliente.post(
+        f"/chamados/{numero}/editar",
+        data={
+            "status": "Em andamento",
+            "prioridade": "5",
+        },
+        follow_redirects=True,
+    )
+
+    assert resposta.status_code == 200
+    assert b"atualizado com sucesso" in resposta.data
+
+    with cliente.application.app_context():
+        with sistema.conectar() as con:
+            chamado = con.execute(
+                "SELECT status, prioridade FROM chamados WHERE id = ?",
+                (numero,),
+            ).fetchone()
+
+    assert chamado["status"] == "Em andamento"
+    assert chamado["prioridade"] == 5
+
+
+def test_editar_chamado_inexistente_retorna_404(cliente):
+    resposta = cliente.get("/chamados/999999/editar")
+
+    assert resposta.status_code == 404
