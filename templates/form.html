@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Cadastrar chamado{% endblock %}
+{% block content %}<section class="intro"><div><p class="eyebrow">REGISTRO DE SOLICITAÇÃO</p><h1>Cadastrar chamado</h1><p class="muted">Preencha as informações do problema de TI.</p></div></section>
+<section class="panel formpanel"><form method="post">
+<div class="field"><label for="titulo">Título do chamado <span class="required">*</span></label><input id="titulo" name="titulo" maxlength="120" required value="{{ chamado.titulo }}" placeholder="Ex.: Computador não liga"><small>Resuma o problema em poucas palavras.</small></div>
+<div class="field"><label for="descricao">Descrição do problema <span class="required">*</span></label><textarea id="descricao" name="descricao" rows="5" maxlength="2000" required placeholder="Descreva o que está acontecendo...">{{ chamado.descricao }}</textarea></div>
+<div class="field"><label for="prioridade">Prioridade <span class="required">*</span></label><select id="prioridade" name="prioridade" required>{% for n,nome in prioridades.items() %}<option value="{{ n }}" {% if chamado.prioridade==n %}selected{% endif %}>{{ n }} — {{ nome }}</option>{% endfor %}</select><small>1 = muito baixa; 5 = urgente.</small></div>
+<p class="note"><strong>Após salvar:</strong> a data será registrada automaticamente e o status inicial será “Aberto”.</p>
+<div class="actions"><a class="button secondary" href="{{ url_for('index') }}">Cancelar</a><button class="button primary" type="submit">Salvar chamado</button></div>
+</form></section>{% endblock %}

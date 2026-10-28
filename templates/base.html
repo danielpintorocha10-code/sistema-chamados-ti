@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Sistema acadêmico de chamados de TI">
+<title>{% block title %}Chamados de TI{% endblock %} | HelpDesk</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="container head">
+<a class="brand" href="{{ url_for('index') }}"><span class="logo" aria-hidden="true">HD</span><span>HelpDesk<small>Chamados de TI</small></span></a>
+<nav aria-label="Navegação principal"><a href="{{ url_for('index') }}">Consultar chamados</a><a class="navbutton" href="{{ url_for('novo') }}">+ Novo chamado</a></nav>
+</div></header>
+<main id="conteudo" class="container main">
+{% with msgs = get_flashed_messages(with_categories=true) %}{% if msgs %}<div aria-live="polite">{% for tipo,msg in msgs %}<p class="alert {{ tipo }}" role="{% if tipo=='erro' %}alert{% else %}status{% endif %}">{{ msg }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+</main>
+<footer><div class="container">Projeto acadêmico — utilize somente dados fictícios nesta demonstração.</div></footer>
+</body></html>

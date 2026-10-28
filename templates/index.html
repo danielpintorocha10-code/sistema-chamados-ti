@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Consultar chamados{% endblock %}
+{% block content %}
+<section class="intro"><div><p class="eyebrow">CENTRAL DE ATENDIMENTO</p><h1>Sistema de chamados de TI</h1><p class="muted">Registre problemas e acompanhe as solicitações.</p></div><a class="button primary" href="{{ url_for('novo') }}">+ Cadastrar chamado</a></section>
+<section class="stats" aria-label="Resumo dos chamados">
+<div class="stat"><span>Total de chamados</span><strong>{{ total }}</strong></div><div class="stat"><span>Em aberto</span><strong>{{ abertos }}</strong></div><div class="stat"><span>Em andamento</span><strong>{{ andamento }}</strong></div><div class="stat"><span>Fechados</span><strong>{{ fechados }}</strong></div>
+</section>
+<section class="panel"><div class="panelhead"><h2>Chamados registrados</h2><p class="muted">Consulte, filtre e atualize solicitações.</p></div>
+<form class="filters" method="get">
+<div class="field grow"><label for="busca">Buscar chamado</label><input id="busca" name="busca" type="search" value="{{ busca }}" placeholder="Título ou descrição"></div>
+<div class="field"><label for="status">Filtrar por status</label><select id="status" name="status"><option value="">Todos os status</option>{% for s in status_validos %}<option value="{{ s }}" {% if filtro_status==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+<button class="button secondary" type="submit">Aplicar filtros</button>{% if busca or filtro_status %}<a href="{{ url_for('index') }}">Limpar</a>{% endif %}
+</form>
+{% if chamados %}<div class="tablewrap"><table><caption class="sr">Lista de chamados registrados</caption><thead><tr><th scope="col">Chamado</th><th scope="col">Abertura</th><th scope="col">Prioridade</th><th scope="col">Status</th><th scope="col">Ação</th></tr></thead><tbody>
+{% for c in chamados %}<tr><td data-label="Chamado"><strong>#{{ "%04d"|format(c.id) }} — {{ c.titulo }}</strong><small class="desc">{{ c.descricao }}</small></td><td data-label="Abertura">{{ c.criado_em|data_br }}</td><td data-label="Prioridade"><span class="priority p{{ c.prioridade }}">{{ c.prioridade }} — {{ prioridades[c.prioridade] }}</span></td><td data-label="Status"><span class="status s{{ c.status|lower|replace(' ','') }}">{{ c.status }}</span></td><td data-label="Ação"><a class="button secondary small" href="{{ url_for('editar', numero=c.id) }}">Atualizar</a></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty"><h3>Nenhum chamado encontrado</h3><p>{% if busca or filtro_status %}Altere os filtros ou limpe a busca.{% else %}Cadastre o primeiro chamado para começar.{% endif %}</p><a class="button primary" href="{{ url_for('novo') }}">Cadastrar chamado</a></div>{% endif %}
+</section>{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Atualizar chamado{% endblock %}
+{% block content %}<section class="intro"><div><p class="eyebrow">ACOMPANHAMENTO</p><h1>Atualizar chamado #{{ "%04d"|format(chamado.id) }}</h1><p class="muted">Altere a prioridade ou a situação atual.</p></div></section>
+<section class="panel formpanel"><div class="summary"><small>Título</small><h2>{{ chamado.titulo }}</h2><small>Descrição</small><p>{{ chamado.descricao }}</p><small>Data de abertura</small><p>{{ chamado.criado_em|data_br }}</p></div>
+<form method="post"><div class="field"><label for="prioridade">Prioridade</label><select id="prioridade" name="prioridade" required>{% for n,nome in prioridades.items() %}<option value="{{ n }}" {% if chamado.prioridade==n %}selected{% endif %}>{{ n }} — {{ nome }}</option>{% endfor %}</select></div>
+<div class="field"><label for="status">Status</label><select id="status" name="status" required>{% for s in status_validos %}<option value="{{ s }}" {% if chamado.status==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+<div class="actions"><a class="button secondary" href="{{ url_for('index') }}">Cancelar</a><button class="button primary" type="submit">Salvar alterações</button></div></form></section>{% endblock %}
