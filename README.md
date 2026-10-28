@@ -1,67 +1,106 @@
 # Sistema de Registro e Acompanhamento de Chamados de TI
 
-MVP acadêmico em Python, Flask, HTML, CSS e SQLite para registrar e acompanhar solicitações de suporte técnico.
+MVP acadêmico desenvolvido com Python, Flask, HTML, CSS e SQLite para registrar e acompanhar solicitações de suporte técnico.
+
+## Objetivo
+
+Facilitar o registro e o acompanhamento de chamados de TI, permitindo organizar solicitações e consultar seus respectivos status e prioridades.
 
 ## Funcionalidades
-- Cadastro com título, descrição e prioridade de 1 a 5.
-- Data e status inicial “Aberto” definidos automaticamente.
-- Listagem, busca por título/descrição e filtro por status.
-- Atualização de prioridade e status.
-- Validação no servidor e mensagens de confirmação/erro.
-- Layout responsivo, rótulos de formulário, foco visível e status apresentados por texto.
-- Persistência local em SQLite.
+
+- Cadastro de chamados com título, descrição e prioridade de 1 a 5.
+- Registro automático da data de criação.
+- Definição do status inicial como **Aberto**.
+- Listagem dos chamados cadastrados.
+- Pesquisa e filtragem de chamados.
+- Atualização da prioridade e do status.
+- Armazenamento dos dados em banco SQLite.
+- Interface web responsiva.
+
+## Tecnologias utilizadas
+
+- Python
+- Flask
+- SQLite
+- HTML5
+- CSS3
+- Git e GitHub
 
 ## Requisitos
-Python 3.11 ou superior.
 
-## Executar no Windows
+- Python 3.11 ou superior.
+- Git (opcional, para versionamento do projeto).
+
+## Como executar o projeto
+
+### 1. Obter os arquivos
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/danielpintorocha10-code/sistema-chamados-ti.git
+cd sistema-chamados-ti
+```
+
+### 2. Criar um ambiente virtual
+
+No Windows:
+
 ```powershell
 python -m venv .venv
+```
+
+Ative o ambiente:
+
+```powershell
 .\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python app.py
-```
-Abra `http://127.0.0.1:5000` no navegador.
-
-## Executar no Linux/macOS
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-python app.py
 ```
 
-## Estrutura
+### 3. Instalar as dependências
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+### 4. Iniciar a aplicação
+
+```powershell
+python app.py
+```
+
+### 5. Acessar no navegador
+
+Abra:
+
+http://127.0.0.1:5000
+
+O banco de dados SQLite é criado localmente pela aplicação quando necessário.
+
+## Estrutura do projeto
+
 ```text
-sistema-chamados-ti-mvp/
+sistema-chamados-ti/
 ├── app.py
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
-├── templates/
-│   ├── base.html
-│   ├── index.html
-│   ├── form.html
-│   ├── editar.html
-│   └── 404.html
-└── static/style.css
+├── chamados.db
+├── static/
+│   └── style.css
+└── templates/
+    ├── base.html
+    ├── index.html
+    ├── form.html
+    ├── editar.html
+    └── 404.html
 ```
 
-## Requisitos funcionais
-- RF01: cadastrar chamado.
-- RF02: consultar listagem.
-- RF03: alterar status.
-- RF04: alterar prioridade.
-- RF05: filtrar por status.
+**Observação:** `chamados.db` é um arquivo local e está excluído do versionamento pelo `.gitignore`.
 
-## Segurança e limitações
-Este MVP é para execução local e não implementa login nem controle de permissões. Antes de publicar como serviço, implemente autenticação/autorização, use uma chave secreta por variável de ambiente, desative o modo debug, use HTTPS e revise os controles de segurança. Não coloque dados reais ou sensíveis no repositório. O arquivo SQLite é criado automaticamente e está excluído do Git pelo `.gitignore`. Em hospedagens efêmeras, o banco local pode não persistir.
+## Contexto acadêmico
 
-## Teste manual
-1. Cadastre um chamado fictício.
-2. Confira o status Aberto na lista.
-3. Pesquise pelo título e aplique o filtro de status.
-4. Atualize prioridade e status.
-5. Recarregue a página para conferir a persistência local.
+Este projeto é um MVP acadêmico de um sistema de registro e acompanhamento de chamados de TI. Seu propósito é aplicar conhecimentos de desenvolvimento web, organização de dados e controle de versão.
 
-A navegação por teclado, acessibilidade com tecnologias assistivas e desempenho precisam ser verificados na validação prática.
+## Repositório
+
+https://github.com/danielpintorocha10-code/sistema-chamados-ti
